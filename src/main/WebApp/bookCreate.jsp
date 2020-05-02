@@ -34,9 +34,9 @@
 
 
 <form action="getBooks" method="get" >
-<b>Book to be find :</b>
-<input type="text" name="isbn" placeholder="Enter ISBN">
-<input type="Submit" value="Search Book">
+<b>Books to be find :</b>
+<!--  <input type="text" name="isbn" placeholder="Enter ISBN">-->
+<input type="Submit" value="List of Books">
 </form><br><hr color="black">
 
 <form action="deleteBooks" method="get" >

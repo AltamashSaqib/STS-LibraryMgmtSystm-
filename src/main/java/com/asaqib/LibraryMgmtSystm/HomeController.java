@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -37,13 +38,19 @@ public class HomeController {
 
 	}
 	
-	@GetMapping("/getBooks")
-	public ModelAndView getBooks(@RequestParam int isbn) {
+	/*@GetMapping("/getBooks")
+	public ModelAndView getBooks() {
 
 		ModelAndView m = new ModelAndView("getbook.jsp");
-		Books books = repo.findById(isbn).orElse(new Books());
+		Iterable<Books> books = repo.findAll();
 		m.addObject(books);
 		return m;
+
+	}*/
+	@GetMapping("/getBooks")
+	@ResponseBody
+	public Iterable<Books> getBooks() {
+		return repo.findAll();
 
 	}
 	
@@ -62,6 +69,7 @@ public class HomeController {
 		
 			books.setAuthor(author);
 			books.setPrice(price);
+			books.setTitle(title);
 			
 			repo.save(books);
 			
