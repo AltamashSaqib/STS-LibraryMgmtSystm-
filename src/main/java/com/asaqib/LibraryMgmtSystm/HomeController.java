@@ -30,7 +30,7 @@ public class HomeController {
 	}
 
 	@PostMapping("/addBooks")
-	public String addBooks(Books books) {
+	public String addBooks(@RequestBody Books books) {
 		System.out.println(" Books Added Successfully...");
 		System.out.println(books);
 		repo.save(books);
