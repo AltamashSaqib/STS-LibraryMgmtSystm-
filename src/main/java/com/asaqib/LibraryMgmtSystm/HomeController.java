@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.asaqib.LibraryMgmtSystm.model.Books;
 
-@Controller
+@RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class HomeController {	
 	@Autowired
@@ -49,8 +49,8 @@ public class HomeController {
 	}*/
 	@GetMapping("/getBooks")
 	@ResponseBody
-	public Iterable<Books> getBooks() {
-		return repo.findAll();
+	public List<Books> getBooks() {
+		return (List<Books>)repo.findAll();
 
 	}
 	
