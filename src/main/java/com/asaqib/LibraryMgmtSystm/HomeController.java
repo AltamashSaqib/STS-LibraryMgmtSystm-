@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +26,10 @@ public class HomeController {
 	@Autowired
 	AccRepo repo;
 
-	@RequestMapping("/")
+	/*@RequestMapping("/")
 	public String home() {
 		return "bookCreate.jsp";
-	}
+	}*/
 
 	@PostMapping("/addBooks")
 	public String addBooks(@RequestBody Books books) {
@@ -54,9 +56,10 @@ public class HomeController {
 
 	}
 	
-	@GetMapping("/deleteBooks")
-	public ModelAndView deleteBooks(@RequestParam int isbn) {
+	@GetMapping(value = "/deleteBooks")
+	public ModelAndView deleteBooks(@RequestParam("isbn") int isbn) {
 
+		System.out.println("Deleted");
 		ModelAndView m = new ModelAndView("delete.jsp");
 		repo.deleteById(isbn);
 		return m;
