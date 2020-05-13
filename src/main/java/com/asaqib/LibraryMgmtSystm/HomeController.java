@@ -20,17 +20,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.asaqib.LibraryMgmtSystm.model.Books;
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping({"/api"})
+//@RequestMapping({"/api"})
 public class HomeController {	
 	@Autowired
 	AccRepo repo;
 
-	/*@RequestMapping("/")
+	@RequestMapping("/")
 	public String home() {
-		return "bookCreate.jsp";
-	}*/
+		return "Application Running Successfully...";
+	}
 
 	@PostMapping("/addBooks")
 	public String addBooks(@RequestBody Books books) {
