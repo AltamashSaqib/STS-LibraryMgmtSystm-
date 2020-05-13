@@ -20,8 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.asaqib.LibraryMgmtSystm.model.Books;
 
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping({"/api"})
 public class HomeController {	
 	@Autowired
 	AccRepo repo;
@@ -56,7 +57,7 @@ public class HomeController {
 
 	}
 	
-	@GetMapping(value = "/deleteBooks")
+	@DeleteMapping(value = "/deleteBooks")
 	public ModelAndView deleteBooks(@RequestParam("isbn") int isbn) {
 
 		System.out.println("Deleted");
