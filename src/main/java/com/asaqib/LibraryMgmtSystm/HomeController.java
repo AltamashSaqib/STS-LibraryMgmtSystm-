@@ -65,8 +65,8 @@ public class HomeController {
 	
 	@DeleteMapping(value = "/deleteBooks/{isbn}")
 	public ResponseEntity<String> deleteBooks(@PathVariable("isbn") int isbn) {
-	   System.out.println("Deleted");
 	   repo.deleteById(isbn);
+	   System.out.println("Book Deleted");
 	   return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 	
@@ -79,11 +79,19 @@ public class HomeController {
 			books.setPrice(price);
 			books.setTitle(title);
 			
-			repo.save(books);
-			
+			repo.save(books);	
 		
 		return "update.jsp";
 	}*/
+	
+	@GetMapping("/books/{id}")
+    public ResponseEntity<Books> getBookId(@PathVariable(value = "id") int isbn)
+      throws ResourceNotFoundException {
+        Books book = repo.findById(isbn)
+           .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + isbn));
+        return ResponseEntity.ok().body(book);
+    }
+
 	
 	 @PutMapping("/updateBooks/{id}")
 	    public ResponseEntity<Books> updateEmployee(@PathVariable(value = "id") int isbn,
