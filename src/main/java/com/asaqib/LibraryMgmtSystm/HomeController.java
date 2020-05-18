@@ -66,8 +66,9 @@ public class HomeController {
 	@DeleteMapping(value = "/deleteBooks/{isbn}")
 	public ResponseEntity<String> deleteBooks(@PathVariable("isbn") int isbn) {
 	   repo.deleteById(isbn);
-	   System.out.println("Book Deleted");
+	   System.out.println("Book Deleted Successfully...");
 	   return new ResponseEntity<>("success", HttpStatus.OK);
+	 
 	}
 	
 	/*@PutMapping("/updateBooks")
@@ -96,8 +97,11 @@ public class HomeController {
 	 @PutMapping("/updateBooks/{id}")
 	    public ResponseEntity<Books> updateEmployee(@PathVariable(value = "id") int isbn,
 	      @Valid @RequestBody Books bookDetails) throws ResourceNotFoundException {
+		 System.out.println("Book Updated Successfully...");
 	        Books book= repo.findById(isbn)
 	           .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + isbn));
+	        
+	        
 
 	        book.setAuthor(bookDetails.getAuthor());
 	        book.setTitle(bookDetails.getTitle());
