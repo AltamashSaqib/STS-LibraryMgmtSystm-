@@ -41,11 +41,11 @@ public class HomeController {
 	}
 
 	@PostMapping("/addBooks")
-	public String addBooks(@RequestBody Books books) {
-		System.out.println(" Books Added Successfully...");
+	public Books addBooks(@RequestBody Books books) {
+		
 		System.out.println(books);
-		repo.save(books);
-		return "result.jsp";
+		System.out.println(" Books Added Successfully...");
+		return repo.save(books);
 
 	}
 	
