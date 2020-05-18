@@ -1,6 +1,8 @@
 package com.asaqib.LibraryMgmtSystm;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -63,14 +65,27 @@ public class HomeController {
 
 	}
 	
+	/*
 	@DeleteMapping(value = "/deleteBooks/{isbn}")
-	public ResponseEntity<String> deleteBooks(@PathVariable("isbn") int isbn) {
-	   repo.deleteById(isbn);
+	public ResponseEntity<String> deleteBooks(@PathVariable("isbn") int isbn)
+		throws ResourceNotFoundException{ 
+		repo.deleteById(isbn);
 	   System.out.println("Book Deleted Successfully...");
 	   return new ResponseEntity<>("success", HttpStatus.OK);
 	 
-	}
+	}*/
 	
+	@DeleteMapping(value = "/deleteBooks/{isbn}")
+	public Map<String, Boolean> deleteBooks(@PathVariable("isbn") int isbn)throws Exception{
+	Books book =
+        repo
+            .findById(isbn)
+            .orElseThrow(() -> new ResourceNotFoundException("User not found on :: " + isbn));
+    repo.delete(book);
+    Map<String, Boolean> response = new HashMap<>();
+    response.put("deleted", Boolean.TRUE);
+    return response;
+  }
 	/*@PutMapping("/updateBooks")
 	public String updateBooks(int isbn,String title,String author,String price) {
 		
