@@ -80,7 +80,7 @@ public class HomeController {
 	Books book =
         repo
             .findById(isbn)
-            .orElseThrow(() -> new ResourceNotFoundException("User not found on :: " + isbn));
+            .orElseThrow(() -> new ResourceNotFoundException("Book not found on :: " + isbn));
     repo.delete(book);
     Map<String, Boolean> response = new HashMap<>();
     response.put("deleted", Boolean.TRUE);
@@ -104,7 +104,7 @@ public class HomeController {
     public ResponseEntity<Books> getBookId(@PathVariable(value = "id") int isbn)
       throws ResourceNotFoundException {
         Books book = repo.findById(isbn)
-           .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + isbn));
+           .orElseThrow(() -> new ResourceNotFoundException("Book not found for this id :: " + isbn));
         return ResponseEntity.ok().body(book);
     }
 
@@ -114,7 +114,7 @@ public class HomeController {
 	      @Valid @RequestBody Books bookDetails) throws ResourceNotFoundException {
 		 System.out.println("Book Updated Successfully...");
 	        Books book= repo.findById(isbn)
-	           .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + isbn));
+	           .orElseThrow(() -> new ResourceNotFoundException("Book not found for this id :: " + isbn));
 	        
 	        
 
