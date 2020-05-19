@@ -30,10 +30,9 @@ import com.asaqib.LibraryMgmtSystm.model.Books;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-//@RequestMapping({"/api"})
-public class HomeController {	
+public class LibraryController {	
 	@Autowired
-	AccRepo repo;
+	LibraryRepository repo;
 
 	@RequestMapping("/")
 	public String home() {
@@ -49,75 +48,40 @@ public class HomeController {
 
 	}
 	
-	/*@GetMapping("/getBooks")
-	public ModelAndView getBooks() {
-
-		ModelAndView m = new ModelAndView("getbook.jsp");
-		Iterable<Books> books = repo.findAll();
-		m.addObject(books);
-		return m;
-
-	}*/
 	@GetMapping("/getBooks")
 	@ResponseBody
 	public List<Books> getBooks() {
 		return (List<Books>)repo.findAll();
-
 	}
 	
-	/*
-	@DeleteMapping(value = "/deleteBooks/{isbn}")
-	public ResponseEntity<String> deleteBooks(@PathVariable("isbn") int isbn)
-		throws ResourceNotFoundException{ 
-		repo.deleteById(isbn);
-	   System.out.println("Book Deleted Successfully...");
-	   return new ResponseEntity<>("success", HttpStatus.OK);
-	 
-	}*/
 	
 	@DeleteMapping(value = "/deleteBooks/{isbn}")
 	public Map<String, Boolean> deleteBooks(@PathVariable("isbn") int isbn)throws Exception{
 	Books book =
         repo
             .findById(isbn)
-            .orElseThrow(() -> new ResourceNotFoundException("Book not found on :: " + isbn));
+            .orElseThrow(() -> new BookNotFoundException("Book not found on :: " + isbn));
     repo.delete(book);
     Map<String, Boolean> response = new HashMap<>();
     response.put("deleted", Boolean.TRUE);
     return response;
   }
-	/*@PutMapping("/updateBooks")
-	public String updateBooks(int isbn,String title,String author,String price) {
-		
-		Books books = repo.findById(isbn).get();
-		
-			books.setAuthor(author);
-			books.setPrice(price);
-			books.setTitle(title);
-			
-			repo.save(books);	
-		
-		return "update.jsp";
-	}*/
 	
 	@GetMapping("/books/{id}")
     public ResponseEntity<Books> getBookId(@PathVariable(value = "id") int isbn)
-      throws ResourceNotFoundException {
+      throws BookNotFoundException {
         Books book = repo.findById(isbn)
-           .orElseThrow(() -> new ResourceNotFoundException("Book not found for this id :: " + isbn));
+           .orElseThrow(() -> new BookNotFoundException("Book not found for this id :: " + isbn));
         return ResponseEntity.ok().body(book);
     }
 
-	
 	 @PutMapping("/updateBooks/{id}")
 	    public ResponseEntity<Books> updateEmployee(@PathVariable(value = "id") int isbn,
-	      @Valid @RequestBody Books bookDetails) throws ResourceNotFoundException {
+	      @Valid @RequestBody Books bookDetails) throws BookNotFoundException {
 		 System.out.println("Book Updated Successfully...");
 	        Books book= repo.findById(isbn)
-	           .orElseThrow(() -> new ResourceNotFoundException("Book not found for this id :: " + isbn));
+	           .orElseThrow(() -> new BookNotFoundException("Book not found for this id :: " + isbn));
 	        
-	        
-
 	        book.setAuthor(bookDetails.getAuthor());
 	        book.setTitle(bookDetails.getTitle());
 	        book.setPrice(bookDetails.getPrice());

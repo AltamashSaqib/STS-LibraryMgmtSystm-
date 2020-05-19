@@ -9,7 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.asaqib.LibraryMgmtSystm.model.Books;
 
 
-public interface AccRepo extends CrudRepository<Books, Integer>{
+public interface LibraryRepository extends CrudRepository<Books, Integer>{
 	
 
 }
