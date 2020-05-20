@@ -7,6 +7,9 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +34,12 @@ import com.asaqib.LibraryMgmtSystm.model.Books;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class LibraryController {	
+	
+	Logger logger = LoggerFactory.getLogger(LibraryController.class);
+	
 	@Autowired
 	LibraryRepository repo;
-
+	
 	@RequestMapping("/")
 	public String home() {
 		return "Application Running Successfully...";
@@ -42,8 +48,7 @@ public class LibraryController {
 	@PostMapping("/addBooks")
 	public Books addBooks(@RequestBody Books books) {
 		
-		System.out.println(books);
-		System.out.println(" Books Added Successfully...");
+		logger.info(" Books Added Successfully...");
 		return repo.save(books);
 
 	}
@@ -78,7 +83,7 @@ public class LibraryController {
 	 @PutMapping("/updateBooks/{id}")
 	    public ResponseEntity<Books> updateEmployee(@PathVariable(value = "id") int isbn,
 	      @Valid @RequestBody Books bookDetails) throws BookNotFoundException {
-		 System.out.println("Book Updated Successfully...");
+		 
 	        Books book= repo.findById(isbn)
 	           .orElseThrow(() -> new BookNotFoundException("Book not found for this id :: " + isbn));
 	        
@@ -86,6 +91,7 @@ public class LibraryController {
 	        book.setTitle(bookDetails.getTitle());
 	        book.setPrice(bookDetails.getPrice());
 	        final Books updatedBook = repo.save(book);
+	        logger.info("Updated Successfully...");
 	        return ResponseEntity.ok(updatedBook);
 	    }
 	
